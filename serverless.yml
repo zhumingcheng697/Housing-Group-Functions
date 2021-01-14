@@ -27,9 +27,9 @@ functions:
 
 package:
     exclude:
-        - .idea/**
-        - node_modules/**
-        - tests/**
+        - ".idea/**"
+        - "node_modules/**"
+        - "tests/**"
         - "*.md"
         - "*.js"
         - "**/.DS_Store"

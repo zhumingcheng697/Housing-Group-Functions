@@ -44,9 +44,9 @@ function send_email($sender_name, $sender_email, $recipient, $subject, $body) {
 
     $sender_name = $props["name"] ?? null;
     $sender_email = $props["email"] ?? null;
-    $recipient = $props["to"] ?? $props["mailto"] ?? "nyu-dining-test@outlook.com";
-    $subject = $props["subject"] ?? "PHP Email Lambda Test (" . date(DATE_RFC2822) . ")";
-    $body = $props["body"] ?? $props["msg"] ?? $props["message"] ?? "This is an automatic email sent using PHP Lambda.";
+    $recipient = ($props["to"] ?? null) ? $props["to"] : (($props["mailto"] ?? null) ? $props["mailto"] : "nyu-dining-test@outlook.com");
+    $subject = ($props["subject"] ?? null) ? $props["subject"] : "PHP Email Lambda Test (" . date(DATE_RFC2822) . ")";
+    $body = ($props["body"] ?? null) ? $props["body"] : (($props["msg"] ?? null) ? $props["msg"] : (($props["message"] ?? null) ? $props["message"] : "This is an automatic email sent using PHP Lambda."));
 
     send_email($sender_name, $sender_email, $recipient, $subject, $body);
 })();
