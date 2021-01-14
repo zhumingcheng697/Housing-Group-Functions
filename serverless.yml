@@ -26,13 +26,13 @@ functions:
             - http: ANY /mail-api/{proxy+}
     post-offer:
         handler: post-offer.php
-            description: ""
-            timeout: 28
-            layers:
-                - ${bref:layer.php-74-fpm}
-            events:
-                - http: ANY /post-offer/
-                - http: ANY /post-offer/{proxy+}
+        description: ""
+        timeout: 28
+        layers:
+            - ${bref:layer.php-74-fpm}
+        events:
+            - http: ANY /post-offer/
+            - http: ANY /post-offer/{proxy+}
 
 package:
     exclude:
