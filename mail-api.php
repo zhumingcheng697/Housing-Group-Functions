@@ -14,18 +14,17 @@ function send_email($sender_name, $sender_email, $recipient, $subject, $body) {
         $mailer = new Swift_Mailer($transport);
 
         $message = (new Swift_Message($subject))
+            ->setFrom([$email_config["username"] => ($sender_name ?? null) ? $sender_name : "PHP Email Lambda Test"])
             ->setTo([$recipient])
             ->setBody($body)
         ;
 
         if ($sender_email) {
             if ($sender_name) {
-                $message->setFrom([$sender_email => $sender_name]);
+                $message->setReplyTo([$sender_email => $sender_name]);
             } else {
-                $message->setFrom([$sender_email]);
+                $message->setReplyTo([$sender_email]);
             }
-        } else {
-            $message->setFrom([$email_config["username"] => "PHP Email Lambda Test"]);
         }
 
         if ($mailer->send($message)) {
