@@ -16,7 +16,7 @@ function send_email($sender_name, $sender_email, $recipient, $subject, $body) {
         $message = (new Swift_Message($subject))
             ->setFrom([$email_config["username"] => $sender_name ? $sender_name : "PHP Email Lambda Test"])
             ->setTo([$recipient])
-            ->setBody($body)
+            ->setBody($body, "text/html")
         ;
 
         if ($sender_email) {
