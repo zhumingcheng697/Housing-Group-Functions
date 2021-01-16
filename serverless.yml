@@ -24,6 +24,17 @@ functions:
         events:
             - http: ANY /mail-api/
             - http: ANY /mail-api/{proxy+}
+
+    post-offer-demo:
+        handler: post-offer-demo.php
+        description: ""
+        timeout: 28
+        layers:
+            - ${bref:layer.php-74-fpm}
+        events:
+            - http: ANY /post-offer-demo/
+            - http: ANY /post-offer-demo/{proxy+}
+
     post-offer:
         handler: post-offer.php
         description: ""
