@@ -5,15 +5,15 @@ require __DIR__ . '/mail-helper.php';
 $props = array();
 parse_str($_SERVER['QUERY_STRING'], $props);
 
-function tableRow($key, $value) {
-    return "<tr><td style='padding: 5px 15px 5px 0px; vertical-align: top;'><b>" . htmlentities($key) . ":</b></td><td style='padding: 5px 0; vertical-align: top;'>" . htmlentities($value) . "</td></tr>";
+function tableRow($key, $value, $encode_uri = true) {
+    return "<tr><td style='padding: 5px 15px 5px 0px; vertical-align: top;'><b>" . ($encode_uri ? htmlentities($key) : $key) . ":</b></td><td style='padding: 5px 0; vertical-align: top;'>" . ($encode_uri ? htmlentities($value) : $value) . "</td></tr>";
 }
 
 function table(...$rows) {
     $tableStr = "<table>";
     foreach ($rows as &$row) {
         if (($row["key"] ?? $row[0]) && ($row["value"] ?? $row[1])) {
-            $tableStr .= tableRow($row["key"] ?? $row[0], str_replace(["\n", "\r"], "</br>", $row["value"] ?? $row[1]));
+            $tableStr .= tableRow($row["key"] ?? $row[0], str_replace(["\n", "\r"], "</br>", $row["value"] ?? $row[1]), $row["encode_uri"] ?? $row[2] ?? true);
         }
     }
     $tableStr .= "</table>";
@@ -26,8 +26,8 @@ $email_msg .= "<h2>" . "Contact Information" . "</h2>";
 $email_msg .= table(
     ["Full Name", $props["name"]],
     ["Department", $props["department"]],
-    ["Phone", $props["phone"]],
-    ["Email", $props["email"]]
+    ["Phone", ($props["phone"] ? "<a href='tel:" . htmlentities($props["phone"]) . "' target='_blank'>" . htmlentities($props["phone"]) . "</a>" : null), false],
+    ["Email", ($props["email"] ? "<a href='mailto:" . htmlentities($props["email"]) . "' target='_blank'>" . htmlentities($props["email"]) . "</a>" : null), false]
 );
 $email_msg .= "</br>";
 
