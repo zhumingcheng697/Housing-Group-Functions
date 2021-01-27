@@ -6,7 +6,7 @@ $props = array();
 parse_str($_SERVER['QUERY_STRING'], $props);
 
 function tableRow($key, $value, $encode_uri = true) {
-    return "<tr><td style='padding: 5px 15px 5px 0px; vertical-align: top; border: none;'><b>" . ($encode_uri ? htmlentities($key) : $key) . ":</b></td><td style='padding: 5px 0; vertical-align: top; border: none;'>" . ($encode_uri ? htmlentities($value) : $value) . "</td></tr>";
+    return "<tr><td style='vertical-align: top; border: none;'>" . ($encode_uri ? htmlentities($key) : $key) . ":</td><td style='vertical-align: top; border: none;'>" . ($encode_uri ? htmlentities($value) : $value) . "</td></tr>";
 }
 
 function table(...$rows) {
@@ -20,36 +20,25 @@ function table(...$rows) {
     return $tableStr;
 }
 
-$email_msg = "";
+$email_msg = "<b>A new sublet offer has been posted:</b>";
 
-$email_msg .= "<h2>" . "Contact Information" . "</h2>";
 $email_msg .= table(
-    ["Full Name", $props["name"]],
-    ["Department", $props["department"]],
-    ["Phone", ($props["phone"] ? "<a href='tel:" . htmlentities($props["phone"]) . "' target='_blank'>" . htmlentities($props["phone"]) . "</a>" : null), false],
-    ["Email", ($props["email"] ? "<a href='mailto:" . htmlentities($props["email"]) . "' target='_blank'>" . htmlentities($props["email"]) . "</a>" : null), false]
-);
-$email_msg .= "</br>";
-
-$email_msg .= "<h2>" . "Sublet Term" . "</h2>";
-$email_msg .= table(
-    ["Start Date (mm/dd/yyyy)", $props["start_date"]],
-    ["End Date (mm/dd/yyyy)", $props["end_date"]]
-);
-$email_msg .= "</br>";
-
-$email_msg .= "<h2>" . "Unit Information" . "</h2>";
-$email_msg .= table(
+    ["Name of Individual Offering Sublet", $props["name"]],
+    ["NYU Department Affiliation", $props["department"]],
+    ["Contact Phone", ($props["phone"] ? "<a href='tel:" . htmlentities($props["phone"]) . "' target='_blank'>" . htmlentities($props["phone"]) . "</a>" : null), false],
+    ["Contact Email", ($props["email"] ? "<a href='mailto:" . htmlentities($props["email"]) . "' target='_blank'>" . htmlentities($props["email"]) . "</a>" : null), false],
+    ["Sublet Start Date (mm/dd/yyyy)", $props["start_date"]],
+    ["Sublet End Date (mm/dd/yyyy)", $props["end_date"]],
     ["Address", $props["address"]],
     ["Number of Bedrooms", $props["num_of_bedroom"]],
     ["Number of Bathrooms", $props["num_of_bathroom"]],
-    ["Current Monthly Rent", $props["rent"]],
-    ["Current Monthly Utilities Charges", $props["utilities"]],
-    ["Current Monthly Cable/Internet/Phone Charges", $props["network"]],
-    ["No Smoking", $props["no_smoking"]],
-    ["No Pets", $props["no_pets"]],
+    ["Monthly Rent", $props["rent"]],
+    ["Monthly Utilities ", $props["utilities"]],
+    ["Monthly Cable/Internet/Phone", $props["network"]],
+    ["Smoking Allowed", $props["smoking"]],
+    ["Pets Allowed", $props["pets"]],
     ["Water Plants", $props["water_plants"]],
-    ["Some closets will be reserved for storage", $props["reserved_closets"]]
+    ["Storage Restrictions", $props["storage_restrictions"]]
 );
 
 send_email(
