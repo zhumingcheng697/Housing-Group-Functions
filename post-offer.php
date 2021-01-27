@@ -13,7 +13,7 @@ function table(...$rows) {
     $tableStr = "<table style='border: none;'>";
     foreach ($rows as &$row) {
         if (($row["key"] ?? $row[0]) && ($row["value"] ?? $row[1])) {
-            $tableStr .= tableRow($row["key"] ?? $row[0], str_replace(["\n", "\r"], "</br>", $row["value"] ?? $row[1]), $row["encode_uri"] ?? $row[2] ?? true);
+            $tableStr .= tableRow($row["key"] ?? $row[0], $row["value"] ?? $row[1], $row["encode_uri"] ?? $row[2] ?? true);
         }
     }
     $tableStr .= "</table>";
