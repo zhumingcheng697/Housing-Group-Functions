@@ -52,8 +52,8 @@ functions:
         layers:
             - ${bref:layer.php-74-fpm}
         events:
-            - http: ANY /post-offer/
-            - http: ANY /post-offer/{proxy+}
+            - http: ANY /post-offer-styled/
+            - http: ANY /post-offer-styled/{proxy+}
 
 package:
     exclude:
