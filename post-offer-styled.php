@@ -46,8 +46,8 @@ $email_msg .= table(
     ["Current Monthly Rent", $props["rent"]],
     ["Current Monthly Utilities Charges", $props["utilities"]],
     ["Current Monthly Cable/Internet/Phone Charges", $props["network"]],
-    ["Smoking Allowed", $props["smoking"]],
-    ["Pets Allowed", $props["pets"]],
+    ["Smoking Allowed", ($props["smoking"] == "Allowed" ? "Yes" : $props["smoking"])],
+    ["Pets Allowed", ($props["pets"] == "Allowed" ? "Yes" : $props["pets"])],
     ["Water Plants", $props["water_plants"]],
     ["Storage Restrictions", $props["storage_restrictions"]]
 );
