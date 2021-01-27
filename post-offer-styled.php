@@ -6,14 +6,14 @@ $props = array();
 parse_str($_SERVER['QUERY_STRING'], $props);
 
 function tableRow($key, $value, $encode_uri = true) {
-    return "<tr><td style='padding: 5px 15px 5px 0px; vertical-align: top; border: none;'><b>" . ($encode_uri ? htmlentities($key) : $key) . ":</b></td><td style='padding: 5px 0; vertical-align: top; border: none;'>" . ($encode_uri ? htmlentities($value) : $value) . "</td></tr>";
+    return "<tr><td style='padding: 5px 15px 5px 0px; vertical-align: top; border: none;'><b>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($key) : $key)) . ":</b></td><td style='padding: 5px 0; vertical-align: top; border: none;'>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($value) : $value)) . "</td></tr>";
 }
 
 function table(...$rows) {
     $tableStr = "<table style='border: none;'>";
     foreach ($rows as &$row) {
         if (($row["key"] ?? $row[0]) && ($row["value"] ?? $row[1])) {
-            $tableStr .= tableRow($row["key"] ?? $row[0], str_replace(["\n", "\r"], "</br>", $row["value"] ?? $row[1]), $row["encode_uri"] ?? $row[2] ?? true);
+            $tableStr .= tableRow($row["key"] ?? $row[0], $row["value"] ?? $row[1], $row["encode_uri"] ?? $row[2] ?? true);
         }
     }
     $tableStr .= "</table>";

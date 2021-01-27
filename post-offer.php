@@ -6,7 +6,7 @@ $props = array();
 parse_str($_SERVER['QUERY_STRING'], $props);
 
 function tableRow($key, $value, $encode_uri = true) {
-    return "<tr><td style='vertical-align: top; border: none;'>" . ($encode_uri ? htmlentities($key) : $key) . ":</td><td style='vertical-align: top; border: none;'>" . ($encode_uri ? htmlentities($value) : $value) . "</td></tr>";
+    return "<tr><td style='vertical-align: top; border: none;'>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($key) : $key)) . ":</td><td style='vertical-align: top; border: none;'>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($value) : $value)) . "</td></tr>";
 }
 
 function table(...$rows) {
