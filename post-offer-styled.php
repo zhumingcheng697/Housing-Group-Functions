@@ -24,17 +24,17 @@ $email_msg = "";
 
 $email_msg .= "<h2>" . "Contact Information" . "</h2>";
 $email_msg .= table(
-    ["Full Name", $props["name"]],
-    ["Department", $props["department"]],
-    ["Phone", ($props["phone"] ? "<a href='tel:" . htmlentities($props["phone"]) . "' target='_blank'>" . htmlentities($props["phone"]) . "</a>" : null), false],
-    ["Email", ($props["email"] ? "<a href='mailto:" . htmlentities($props["email"]) . "' target='_blank'>" . htmlentities($props["email"]) . "</a>" : null), false]
+    ["Name of Individual Offering Sublet", $props["name"]],
+    ["NYU Department Affiliation", $props["department"]],
+    ["Contact Phone", ($props["phone"] ? "<a href='tel:" . htmlentities($props["phone"]) . "' target='_blank'>" . htmlentities($props["phone"]) . "</a>" : null), false],
+    ["Contact Email", ($props["email"] ? "<a href='mailto:" . htmlentities($props["email"]) . "' target='_blank'>" . htmlentities($props["email"]) . "</a>" : null), false]
 );
 $email_msg .= "</br>";
 
 $email_msg .= "<h2>" . "Sublet Term" . "</h2>";
 $email_msg .= table(
-    ["Start Date (mm/dd/yyyy)", $props["start_date"]],
-    ["End Date (mm/dd/yyyy)", $props["end_date"]]
+    ["Sublet Start Date (mm/dd/yyyy)", $props["start_date"]],
+    ["Sublet End Date (mm/dd/yyyy)", $props["end_date"]]
 );
 $email_msg .= "</br>";
 
@@ -46,10 +46,10 @@ $email_msg .= table(
     ["Current Monthly Rent", $props["rent"]],
     ["Current Monthly Utilities Charges", $props["utilities"]],
     ["Current Monthly Cable/Internet/Phone Charges", $props["network"]],
-    ["No Smoking", $props["no_smoking"]],
-    ["No Pets", $props["no_pets"]],
+    ["Smoking Allowed", $props["no_smoking"]],
+    ["Pets Allowed", $props["no_pets"]],
     ["Water Plants", $props["water_plants"]],
-    ["Some closets will be reserved for storage", $props["reserved_closets"]]
+    ["Storage Restrictions", $props["reserved_closets"]]
 );
 
 send_email(
