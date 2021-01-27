@@ -46,10 +46,10 @@ $email_msg .= table(
     ["Current Monthly Rent", $props["rent"]],
     ["Current Monthly Utilities Charges", $props["utilities"]],
     ["Current Monthly Cable/Internet/Phone Charges", $props["network"]],
-    ["Smoking Allowed", $props["no_smoking"]],
-    ["Pets Allowed", $props["no_pets"]],
+    ["Smoking Allowed", $props["smoking"]],
+    ["Pets Allowed", $props["pets"]],
     ["Water Plants", $props["water_plants"]],
-    ["Storage Restrictions", $props["reserved_closets"]]
+    ["Storage Restrictions", $props["storage_restrictions"]]
 );
 
 send_email(
