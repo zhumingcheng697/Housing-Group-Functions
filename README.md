@@ -38,7 +38,7 @@
     $ composer install
     ```
 
-7. If you have not done so already, configure `email.json` and run `upload-email-credential.php` to upload it AWS Secret Manager.
+7. If you have not done so already, configure `email.json` and run `upload-email-credential.php` to upload it to AWS Secrets Manager.
     ```json
    {
      "host": <your_host>,

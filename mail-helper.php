@@ -22,11 +22,11 @@ function get_email_config($callback) {
         if (isset($result['SecretString'])) {
             $callback(json_decode($result['SecretString'], true));
         } else {
-            echo "Unable to get email credentials from AWS Secret Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
+            echo "Unable to get email credentials from AWS Secrets Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
             get_local_email_config($callback);
         }
     } catch (AwsException $e) {
-        echo "Unable to get email credentials from AWS Secret Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
+        echo "Unable to get email credentials from AWS Secrets Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
         get_local_email_config($callback);
     }
 }
