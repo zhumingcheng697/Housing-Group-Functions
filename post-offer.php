@@ -41,7 +41,7 @@ $email_msg .= table(
     ["Storage Restrictions", $props["storage_restrictions"]]
 );
 
-send_email(
+mail_helper(
     $props["name"],
     $props["email"],
     (($props["dev"] ?? null) ? (($props["dev_email"] ?? null) ? $props["dev_email"] : "nyu-faculty-housing-group@outlook.com") : "faculty-housing-test-external-group@googlegroups.com"),

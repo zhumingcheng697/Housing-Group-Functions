@@ -2,22 +2,55 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-function send_email($sender_name, $sender_email, $recipient, $subject, $body) {
-    try {
-        $email_config = json_decode(file_get_contents(__DIR__ . '/email.json'), true);
+use Aws\SecretsManager\SecretsManagerClient;
+use Aws\Exception\AwsException;
 
+function get_email_config($callback) {
+    $client = new SecretsManagerClient([
+        'profile' => 'default',
+        'version' => '2017-10-17',
+        'region' => 'us-east-1',
+    ]);
+
+    $secretName = 'nyu-it-dgcom-fhd-email';
+
+    try {
+        $result = $client->getSecretValue([
+            'SecretId' => $secretName,
+        ]);
+
+        if (isset($result['SecretString'])) {
+            $callback(json_decode($result['SecretString'], true));
+        } else {
+            echo "Unable to get email credentials from AWS Secret Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
+            get_local_email_config($callback);
+        }
+    } catch (AwsException $e) {
+        echo "Unable to get email credentials from AWS Secret Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
+        get_local_email_config($callback);
+    }
+}
+
+function get_local_email_config($callback) {
+    if (!file_exists(__DIR__ . '/email.json')) {
+        echo "Unable to load \"email.json\" as fallback. Email failed to send.\n";
+    } else {
+        $callback(json_decode(file_get_contents(__DIR__ . '/email.json'), true));
+    }
+}
+
+function send_email($sender_name, $sender_email, $recipient, $subject, $body, $email_config) {
+    try {
         $transport = (new Swift_SmtpTransport($email_config["host"], $email_config["port"], ($email_config["encryption"] ?? null) ? $email_config["encryption"] : null))
             ->setUsername($email_config["username"])
-            ->setPassword($email_config["password"])
-        ;
+            ->setPassword($email_config["password"]);
 
         $mailer = new Swift_Mailer($transport);
 
         $message = (new Swift_Message($subject))
-            ->setFrom([$email_config["username"] => $sender_name ? $sender_name : "PHP Email Lambda Test"])
+            ->setFrom([$email_config["username"] => $sender_name ?: "PHP Email Lambda Test"])
             ->setTo([$recipient])
-            ->setBody($body, "text/html")
-        ;
+            ->setBody($body, "text/html");
 
         if ($sender_email) {
             if ($sender_name) {
@@ -33,7 +66,7 @@ function send_email($sender_name, $sender_email, $recipient, $subject, $body) {
             echo "Email failed to send\n";
         }
     } catch (Exception $e) {
-        echo "Email failed to send:\n" .  $e->getMessage() . "\n";
+        echo "Email failed to send:\n" . $e->getMessage() . "\n";
     }
 }
 
@@ -47,7 +80,9 @@ function mail_helper($overloaded_sender_name = null, $overloaded_sender_email = 
     $subject = $overloaded_subject ? $overloaded_subject : (($props["subject"] ?? null) ? $props["subject"] : ($fallback_subject ? $fallback_subject : "PHP Email Lambda Test (" . date(DATE_RFC2822) . ")"));
     $body = $overloaded_body ? $overloaded_body : (($props["body"] ?? null) ? $props["body"] : (($props["msg"] ?? null) ? $props["msg"] : (($props["message"] ?? null) ? $props["message"] : ($fallback_body ? $fallback_body : "This is an automatic email sent using PHP Lambda."))));
 
-    send_email($sender_name, $sender_email, $recipient, $subject, $body);
+    get_email_config(function ($email_config) use ($sender_name, $sender_email, $recipient, $subject, $body) {
+        send_email($sender_name, $sender_email, $recipient, $subject, $body, $email_config);
+    });
 }
 
 ?>

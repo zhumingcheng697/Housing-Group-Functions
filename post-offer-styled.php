@@ -6,7 +6,7 @@ $props = array();
 parse_str($_SERVER['QUERY_STRING'], $props);
 
 function tableRow($key, $value, $encode_uri = true) {
-    return "<tr><td style='padding: 5px 15px 5px 0px; vertical-align: top; border: none;'><b>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($key) : $key)) . ":</b></td><td style='padding: 5px 0; vertical-align: middle; border: none;'>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($value) : $value)) . "</td></tr>";
+    return "<tr><td style='padding: 5px 15px 5px 0; vertical-align: top; border: none;'><b>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($key) : $key)) . ":</b></td><td style='padding: 5px 0; vertical-align: middle; border: none;'>" . str_replace(["\n", "\r"], "</br>", ($encode_uri ? htmlentities($value) : $value)) . "</td></tr>";
 }
 
 function table(...$rows) {
@@ -52,7 +52,7 @@ $email_msg .= table(
     ["Storage Restrictions", $props["storage_restrictions"]]
 );
 
-send_email(
+mail_helper(
     $props["name"],
     $props["email"],
     (($props["dev"] ?? null) ? (($props["dev_email"] ?? null) ? $props["dev_email"] : "nyu-faculty-housing-group@outlook.com") : "faculty-housing-test-external-group@googlegroups.com"),
