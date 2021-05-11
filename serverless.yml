@@ -38,4 +38,4 @@ package:
         - "!*.js"
         - "!**/.DS_Store"
         - "!email.json"
-        - "!update-email-credential.php"
+        - "!upload-email-credential.php"
