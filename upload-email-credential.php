@@ -3,7 +3,6 @@
 require __DIR__ . '/mail-helper.php';
 
 use Aws\SecretsManager\SecretsManagerClient;
-use Aws\Exception\AwsException;
 
 if (!file_exists(__DIR__ . '/email.json')) {
     echo "Unable to load \"email.json\". Please configure it if you have not done so already.\n";
@@ -24,7 +23,7 @@ if (!file_exists(__DIR__ . '/email.json')) {
             'SecretString' => $secret,
         ]);
         echo "Secret updated successfully\n";
-    } catch (AwsException $e) {
+    } catch (Exception $e) {
         try {
             $result = $client->createSecret([
                 'Description' => $description,
@@ -32,7 +31,7 @@ if (!file_exists(__DIR__ . '/email.json')) {
                 'SecretString' => $secret,
             ]);
             echo "Secret created successfully\n";
-        } catch (AwsException $err) {
+        } catch (Exception $err) {
             echo $e->getMessage();
             echo "\n";
             echo $err->getMessage();

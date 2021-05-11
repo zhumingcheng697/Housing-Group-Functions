@@ -3,7 +3,6 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Aws\SecretsManager\SecretsManagerClient;
-use Aws\Exception\AwsException;
 
 function get_email_config($callback) {
     $client = new SecretsManagerClient([
@@ -24,7 +23,7 @@ function get_email_config($callback) {
             echo "Unable to get email credentials from AWS Secrets Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
             get_local_email_config($callback);
         }
-    } catch (AwsException $e) {
+    } catch (Exception $e) {
         echo "Unable to get email credentials from AWS Secrets Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
         get_local_email_config($callback);
     }
