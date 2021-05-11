@@ -1,6 +1,8 @@
 {
+    "name": "zhumingcheng697/housing-group-functions",
+    "description": "Lambda Functions for the Faculty Housing Google Group",
     "require": {
-        "bref/bref": "^0.5.30",
+        "bref/bref": "^1.2",
         "aws/aws-sdk-php": "^3.155",
         "swiftmailer/swiftmailer": "^6.0"
     }
