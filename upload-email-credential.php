@@ -33,7 +33,8 @@ if (!file_exists(__DIR__ . '/email.json')) {
             ]);
             echo "Secret created successfully\n";
         } catch (AwsException $err) {
-            // output error message if fails
+            echo $e->getMessage();
+            echo "\n";
             echo $err->getMessage();
             echo "\n";
         }

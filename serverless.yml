@@ -60,10 +60,11 @@ functions:
 #            - http: ANY /post-offer-styled/{proxy+}
 
 package:
-    exclude:
-        - ".idea/**"
-        - "node_modules/**"
-        - "tests/**"
-        - "*.md"
-        - "*.js"
-        - "**/.DS_Store"
+    patterns:
+        - "!.idea/**"
+        - "!node_modules/**"
+        - "!tests/**"
+        - "!*.md"
+        - "!*.js"
+        - "!**/.DS_Store"
+        - "!email.json"
