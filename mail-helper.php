@@ -18,12 +18,15 @@ function get_email_config($callback) {
             'SecretId' => $secretName,
         ]);
 
+        var_dump($result);
+
         if (isset($result['SecretString'])) {
             $callback(json_decode($result['SecretString'], true));
         } else if (isset($result['SecretBinary'])) {
             $callback(json_decode(base64_decode($result['SecretBinary']), true));
         } else {
             echo "Unable to get email credentials from AWS Secrets Manager. Please run \"upload-email-credential.php\" if you have not done so already.\n";
+            var_dump($result);
             get_local_email_config($callback);
         }
     } catch (AwsException $e) {
