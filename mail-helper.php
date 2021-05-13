@@ -7,7 +7,6 @@ use Aws\Exception\AwsException;
 
 function get_email_config($callback) {
     $client = new SecretsManagerClient([
-        'version' => '2017-10-17',
         'region' => 'us-east-1',
     ]);
 
@@ -17,8 +16,6 @@ function get_email_config($callback) {
         $result = $client->getSecretValue([
             'SecretId' => $secretName,
         ]);
-
-        var_dump($result);
 
         if (isset($result['SecretString'])) {
             $callback(json_decode($result['SecretString'], true));
